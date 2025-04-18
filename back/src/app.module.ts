@@ -8,9 +8,13 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { SubcategoriasModule } from './subcategorias/subcategorias.module';
 import { ProductosModule } from './productos/productos.module';
 import { CarritoModule } from './carrito/carrito.module';
+import { OrdenesModule } from './ordenes/ordenes.module';
+import { PagosModule } from './pagos/pagos.module';
 
 @Module({
   imports: [
+    
+
     ConfigModule.forRoot({
       envFilePath: '.env',
       load: [() => require('dotenv').config({ path: 'datos.env' })], 
@@ -34,7 +38,9 @@ import { CarritoModule } from './carrito/carrito.module';
     CategoriasModule,
     SubcategoriasModule,
     ProductosModule,
-    CarritoModule
+    CarritoModule,
+    OrdenesModule,
+    PagosModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Categoria } from '../../categorias/entities/categoria.entity';
+import { Subcategoria } from '../../subcategorias/entities/subcategoria.entity';
 
 @Entity('productos')
 export class Producto {
@@ -15,18 +15,15 @@ export class Producto {
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   precio: number;
 
-  @Column()
+  @Column({ type: 'int' })
   stock: number;
 
-  @Column()
-  categoria_id: number;
-
-  @ManyToOne(() => Categoria)
-  @JoinColumn({ name: 'categoria_id' })
-  categoria: Categoria;
+  @ManyToOne(() => Subcategoria, { eager: true, cascade:true, onDelete:'CASCADE' })
+  @JoinColumn({ name: 'subcategoria_id' })
+  subcategoria?: Subcategoria;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  imagen_url: string;
+  imagen_url?: string;
 
   @Column({ default: false })
   destacado: boolean;

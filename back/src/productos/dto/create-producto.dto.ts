@@ -3,7 +3,7 @@ export class CreateProductoDto {
     descripcion: string;
     precio: number;
     stock: number;
-    categoria_id: number;
+    subcategoria_id: number;
     imagen_url?: string;
     destacado?: boolean;
   }

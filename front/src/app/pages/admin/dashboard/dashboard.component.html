@@ -1,0 +1,28 @@
+<h2>Panel de Administración</h2>
+
+<div style="display: flex; gap: 10px; margin-bottom: 20px;">
+  <button (click)="mostrarVista('productos')">Productos</button>
+  <button (click)="mostrarVista('subcategorias')">Subcategorías</button>
+  <button (click)="mostrarVista('ordenes')">Órdenes</button>
+  <button (click)="mostrarVista('pagos')">Pagos</button>
+
+</div>
+
+<div *ngIf="vistaActual === 'productos'">
+  <app-productos></app-productos>
+</div>
+
+<div *ngIf="vistaActual === 'subcategorias'">
+  <app-subcategorias></app-subcategorias>
+</div>
+
+<div *ngIf="vistaActual === 'ordenes'">
+  <app-ordenes></app-ordenes>
+</div>
+
+<div *ngIf="vistaActual === 'pagos'">
+    <app-pagos></app-pagos>
+  </div>
+
+  <button (click)="logout()">Cerrar sesión</button>
+

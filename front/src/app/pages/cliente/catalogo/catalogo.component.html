@@ -1,0 +1,30 @@
+<h2>Catálogo</h2>
+
+<div class="subcategorias" style="margin-bottom: 20px;">
+    <button *ngFor="let sub of subcategorias" [class.active]="subcategoriaSeleccionada === sub.id"
+        (click)="seleccionarSubcategoria(sub.id)">
+        {{ sub.nombre }}
+    </button>
+</div>
+
+<div class="grid-productos">
+    <div class="producto" *ngFor="let prod of productos">
+        <div class="img-container">
+            <img [src]="'http://localhost:3000/uploads/productos/' + prod.imagen_url" alt="Producto">
+        </div>
+        <h3>{{ prod.nombre }}</h3>
+        <p>{{ prod.descripcion }}</p>
+        <p>{{ prod.precio | currency }}</p>
+        <p [style.color]="prod.stock > 0 ? 'green' : 'red'">
+            {{ prod.stock > 0 ? 'Disponible' : 'No disponible' }}
+        </p>
+
+        <label *ngIf="prod.stock > 0">
+            Cantidad:
+            <input type="number" min="1" [max]="prod.stock" [(ngModel)]="cantidades[prod.id]" />
+        </label>
+        <p>
+            <button (click)="agregarAlCarrito(prod)">Añadir al carrito</button>
+        </p>
+    </div>
+</div>

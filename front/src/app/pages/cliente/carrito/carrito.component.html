@@ -1,0 +1,41 @@
+<h2>Mi Carrito</h2>
+
+<div *ngIf="carrito.items.length === 0 && !ordenConfirmada">
+  <p>Tu carrito está vacío.</p>
+</div>
+
+<table *ngIf="carrito.items.length > 0" border="1" cellpadding="10" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Imagen</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Subtotal</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of carrito.items">
+      <td>{{ item.producto.nombre }}</td>
+      <td>
+        <img [src]="'http://localhost:3000/uploads/productos/' + item.producto.imagen_url" width="80" />
+      </td>
+      <td>{{ item.producto.precio | currency }}</td>
+      <td>{{ item.cantidad }}</td>
+      <td>{{ item.cantidad * item.producto.precio | currency }}</td>
+      <td>
+        <button (click)="eliminarItem(item.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Controles finales -->
+<div *ngIf="carrito.items.length > 0" style="margin-top: 20px;">
+  <strong>Total:</strong> {{ calcularTotal() | currency }}
+  <br /><br />
+  <button (click)="vaciarCarrito()">Vaciar carrito</button>
+  <button (click)="generarOrden()">Generar Orden</button>
+</div>
+

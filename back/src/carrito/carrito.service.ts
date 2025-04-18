@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carrito } from './entities/carrito.entity';
@@ -13,10 +13,14 @@ export class CarritoService {
     private carritoRepo: Repository<Carrito>,
 
     @InjectRepository(CarritoItem)
-    private itemRepo: Repository<CarritoItem>
+    private itemRepo: Repository<CarritoItem>,
   ) {}
 
   async getCarrito(usuario_id?: number, session_id?: string) {
+    if (!usuario_id && !session_id) {
+      throw new BadRequestException('Se requiere usuario_id o session_id');
+    }
+
     let carrito: Carrito | null = null;
 
     if (usuario_id) {
@@ -24,7 +28,7 @@ export class CarritoService {
         where: { usuario_id },
         relations: ['items', 'items.producto'],
       });
-    } else if (session_id) {
+    } else {
       carrito = await this.carritoRepo.findOne({
         where: { session_id },
         relations: ['items', 'items.producto'],
@@ -41,6 +45,10 @@ export class CarritoService {
   }
 
   async addItem(dto: AddItemDto) {
+    if (!dto.usuario_id && !dto.session_id) {
+      throw new BadRequestException('Se requiere usuario_id o session_id');
+    }
+
     const carrito = await this.getCarrito(dto.usuario_id, dto.session_id);
 
     const existente = await this.itemRepo.findOne({

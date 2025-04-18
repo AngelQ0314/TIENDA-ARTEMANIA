@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param, UseGuards, Req, Put } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, UseGuards, Req, Patch} from '@nestjs/common';
 import { SubcategoriasService } from './subcategorias.service';
 import { CreateSubcategoriaDto } from './dto/create-subcategoria.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -27,7 +27,7 @@ export class SubcategoriasController {
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('admin')
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: number, 
     @Body() updateSubcategoriaDto: CreateSubcategoriaDto,
